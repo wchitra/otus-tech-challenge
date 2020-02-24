@@ -1,0 +1,48 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="searchForm" (ngSubmit)="search()">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="name">First Name:</label>
+            <input type="text" id="name" class="form-control" formControlName="firstName">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="name">Last Name:</label>
+            <input type="text" id="name" class="form-control" formControlName="lastName">
+          </div>
+        </div>
+        <button title="Search" class="btn btn-primary" type="submit" [disabled]="disableSearch()">
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>First</th>
+            <th>Last</th>
+            <th>GPA</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="students$ | async as students">
+          <tr *ngIf="students?.length === 0">
+            <td [attr.colspan]="4" class="not-found">Student not found.</td>
+          </tr>
+          <tr *ngFor="let student of students">
+            <td>{{student.first}}</td>
+            <td>{{student.last}}</td>
+            <td>{{student.gpa | number:'1.2-2'}}</td>
+            <td>
+              <a [routerLink]="[student.id]">Details</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
